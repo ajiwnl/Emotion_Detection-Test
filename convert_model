@@ -1,0 +1,24 @@
+import tensorflow as tf
+from transformers import AutoTokenizer, TFAutoModelForSequenceClassification
+
+# Load the Hugging Face model and tokenizer
+model_name = "bhadresh-savani/bert-base-go-emotion"  # or "distilbert-base-uncased" if you want DistilBERT
+tokenizer = AutoTokenizer.from_pretrained(model_name)
+model = TFAutoModelForSequenceClassification.from_pretrained(model_name)
+
+# Save the model to a directory
+model.save_pretrained("go_emotion_model")
+tokenizer.save_pretrained("go_emotion_model")
+
+# Convert to TensorFlow SavedModel format
+tf.saved_model.save(model, "saved_model/go_emotion_model")
+
+# Convert to TFLite format
+converter = tf.lite.TFLiteConverter.from_saved_model("saved_model/go_emotion_model")
+tflite_model = converter.convert()
+
+# Save the TFLite model
+with open("go_emotion_model.tflite", "wb") as f:
+    f.write(tflite_model)
+
+print("Model converted and saved successfully.")
