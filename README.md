@@ -1,8 +1,3 @@
-CREATE VENV:
-python -m venv env-name
+## Help-Konnect 
 
-USED VENV:
-env-name\Scripts\Activate
-
-EXIT VENV:
-Deactivate 
+Text Classification for Text to Emotion analysis utiziling bert-base-go-emotion model
